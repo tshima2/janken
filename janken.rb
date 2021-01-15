@@ -4,30 +4,30 @@ $HANDS=["グー", "チョキ", "パー"]
 # プレイヤー(自分)に「0 ~ 2」を入力させるロジックを書きます。
 class Player
   def hand
-    # 「プレイヤーに 0 ~ 2を入力させる文章」を表示させます。
-    puts "数字を入力してください。"
-    #puts "0:グー, 1:チョキ, 2:パー"
-    $HANDS.each_with_index do |val,key|
-      puts "#{key.to_s}:#{val}"
-    end
 
-
-    # 変数「input_hand」にプレイヤーが入力したものを取得して代入します。
-    # ヒント! 「getsメソッド」を使用します。
-    input_hand = gets.to_i
-
-    # 「input_hand」(取得した値)が「0, 1, 2」のいずれかだとwhileから脱出させ、それ以外だと初めから繰り返させます。
     while true
-      if Range.new(0, $HANDS.length).include?(input_hand)
-        return input_hand
-      else
-        # 「プレイヤーに 0 ~ 2を入力させる文章」を表示させます。
-        puts "もう一度数字を入力してください。"
-        #puts "0:グー, 1:チョキ, 2:パー"
-        $HANDS.each_with_index do |val,key|
-          puts "#{key.to_s}:#{val}"
+      # 「プレイヤーに 0 ~ 2を入力させる文章」を表示させます。
+      puts "数字を入力してください。"
+      #puts "0:グー, 1:チョキ, 2:パー"
+      $HANDS.each_with_index do |val,key|
+        puts "#{key.to_s}:#{val}"
+      end
+
+      # 「input_hand」(取得した値)が「0, 1, 2」のいずれかだとwhileから脱出させ、それ以外だと初めから繰り返させます。
+      # 変数「input_hand」にプレイヤーが入力したものを取得して代入します。
+      # ヒント! 「getsメソッド」を使用します。
+      begin
+        #input_hand = gets.to_i
+        input_hand = Integer(gets)
+        if Range.new(0, $HANDS.length-1).include?(input_hand)
+          return input_hand
+        else
+          puts "0〜2の数字を入力してください。"
+          next
         end
-        input_hand=gets.to_i
+      rescue ArgumentError=>ex
+        puts "0〜2の数字を入力してください。"
+        next
       end
     end
   end
@@ -36,7 +36,7 @@ end
 class Enemy
   def hand
     # グー、チョキ、パーの値をランダムに出力させます。
-    return rand(Range.new(0, $HANDS.length))
+    return rand(Range.new(0, $HANDS.length-1))
   end
 end
 
