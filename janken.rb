@@ -3,8 +3,8 @@ $HANDS=["グー", "チョキ", "パー"]
 
 # プレイヤー(自分)に「0 ~ 2」を入力させるロジックを書きます。
 class Player
-  def hand
 
+  def hand
     while true
       # 「プレイヤーに 0 ~ 2を入力させる文章」を表示させます。
       puts "数字を入力してください。"
@@ -17,7 +17,6 @@ class Player
       # 変数「input_hand」にプレイヤーが入力したものを取得して代入します。
       # ヒント! 「getsメソッド」を使用します。
       begin
-        #input_hand = gets.to_i
         input_hand = Integer(gets)
         if Range.new(0, $HANDS.length-1).include?(input_hand)
           return input_hand
@@ -41,22 +40,19 @@ class Enemy
 end
 
 class Janken
-
   def pon(player_hand, enemy_hand)
     #puts "相手の手は#{ $HANDS[enemy_hand] }です。"
     describe_enemy_hand="相手の手は#{ $HANDS[enemy_hand] }です。"
 
-    if player_hand == enemy_hand
+    case (player_hand - enemy_hand + 3) % 3
+    when 0
       puts "あいこ"
       #「true」を返してじゃんけんを繰り返し実行させます。
       return true
-
-    elsif ((player_hand == 0 && enemy_hand == 1) || (player_hand == 1 && enemy_hand == 2) || (player_hand == 2 && enemy_hand == 0))
-      puts "#{describe_enemy_hand}あなたの勝ちです"
-      # whileを終了させる「false」を返してじゃんけんを終了させます。
-      return false
-    else
+    when 1
       puts "#{describe_enemy_hand}あなたの負けです"
+    when 2
+      puts "#{describe_enemy_hand}あなたの勝ちです"
       # whileを終了させる「false」を返してじゃんけんを終了させます。
       return false
     end
